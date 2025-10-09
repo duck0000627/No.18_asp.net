@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "事務所";
+}
+<div class="container-fluid">
+    <div class="row">
+        <!-- 左側側邊欄 (1/4) -->
+        <div class="col-md-4 border-end vh-100 d-flex flex-column p-3">
+            <!-- 搜尋框 -->
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="搜尋案件...">
+            </div>
+
+            <hr> <!-- 分隔線 -->
+            <!-- 新增案件按鈕 -->
+            <div class="mb-3">
+                <button class="btn btn-primary w-100">新增案件</button>
+            </div>
+
+            <hr> <!-- 分隔線 -->
+            <!-- 案件列表 -->
+            <div class="flex-grow-1 overflow-auto">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        案件 A
+                        <button class="btn btn-sm btn-outline-primary">查看</button>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        案件 B
+                        <button class="btn btn-sm btn-outline-primary">查看</button>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        案件 C
+                        <button class="btn btn-sm btn-outline-primary">查看</button>
+                    </li>
+                    <!-- 可以用迴圈產生更多案件 -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- 右側主要內容區 (3/4) -->
+        <div class="col-md-8 p-4">
+            <h3>主要內容區</h3>
+            <p>這裡可以放案件詳細內容或其他資訊。</p>
+        </div>
+    </div>
+</div>

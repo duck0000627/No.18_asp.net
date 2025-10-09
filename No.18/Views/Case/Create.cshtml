@@ -1,0 +1,39 @@
+﻿@model No._18.Models.CaseModel
+
+<h3>新增案件</h3>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="CaseNumber" class="form-label"></label>
+        <input asp-for="CaseNumber" class="form-control" />
+        <span asp-validation-for="CaseNumber" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CompanyName" class="form-label"></label>
+        <input asp-for="CompanyName" class="form-control" />
+        <span asp-validation-for="CompanyName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Type" class="form-label"></label>
+        <input asp-for="Type" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ResponsiblePerson" class="form-label"></label>
+        <input asp-for="ResponsiblePerson" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Phone" class="form-label"></label>
+        <input asp-for="Phone" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">新增案件</button>
+</form>
