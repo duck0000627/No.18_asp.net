@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using No._18.Models;
+using System.Threading.Tasks;
 
 namespace No._18.Controllers
 {
@@ -21,21 +23,23 @@ namespace No._18.Controllers
         // POST: /Case/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CaseModel model)
+        public async Task<IActionResult> Create(CaseModel model)
         {
             if (ModelState.IsValid)
             {
                 _context.Cases.Add(model);
-                _context.SaveChanges();
-                return RedirectToAction("Index"); // 新增成功回到列表頁
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index)); // 新增成功回到列表頁
             }
             return View(model);
         }
 
         // GET: /Case/Index
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var caseList = await _context.Cases.ToListAsync();
+
+            return View(caseList);
         }
     }
 }

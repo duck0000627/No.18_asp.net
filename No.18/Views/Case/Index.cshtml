@@ -1,6 +1,9 @@
 ﻿@{
     ViewData["Title"] = "事務所";
 }
+
+@model IEnumerable<No._18.Models.CaseModel>
+
 <div class="container-fluid">
     <div class="row">
         <!-- 左側側邊欄 (1/4) -->
@@ -21,18 +24,21 @@
             <div class="flex-grow-1 overflow-auto">
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        案件 A
+                        案件 A(範例)
                         <button class="btn btn-sm btn-outline-primary">查看</button>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        案件 B
-                        <button class="btn btn-sm btn-outline-primary">查看</button>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        案件 C
+                        案件 B(範例)
                         <button class="btn btn-sm btn-outline-primary">查看</button>
                     </li>
                     <!-- 可以用迴圈產生更多案件 -->
+                    @foreach (var item in Model)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @item.CompanyName
+                            <button class="btn btn-sm btn-outline-primary">查看</button>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -41,6 +47,31 @@
         <div class="col-md-8 p-4">
             <h3>主要內容區</h3>
             <p>這裡可以放案件詳細內容或其他資訊。</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>案件編號</th>
+                        <th>公司名稱</th>
+                        <th>種類</th>
+                        <th>負責人</th>
+                        <th>電話</th>
+                        <th>信箱</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.CaseNumber</td>
+                            <td>@item.CompanyName</td>
+                            <td>@item.Type</td>
+                            <td>@item.ResponsiblePerson</td>
+                            <td>@item.Phone</td>
+                            <td>@item.Email</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
