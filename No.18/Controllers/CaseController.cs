@@ -29,17 +29,29 @@ namespace No._18.Controllers
             {
                 _context.Cases.Add(model);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index)); // 新增成功回到列表頁
+                return RedirectToAction(nameof(Index), new { id = model.Id}); // 新增成功回到列表頁
             }
             return View(model);
         }
 
         // GET: /Case/Index
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
-            var caseList = await _context.Cases.ToListAsync();
+            // 建立 ViewModel 實體
+            var viewModel = new CaseIndexViewModel
+            {
+                // 取得所有案件列表，用於左側選單
+                AllCases = await _context.Cases.ToListAsync()
+            };
 
-            return View(caseList);
+            // 如果網址中提供了 id (例如 /Case/Index/5)
+            if (id != null)
+            {
+                // 從所有案件中找出對應 ID 的案件，並存入 ViewModel
+                viewModel.SelectedCase = viewModel.AllCases.FirstOrDefault(c => c.Id == id);
+            }
+
+            return View(viewModel);
         }
     }
 }

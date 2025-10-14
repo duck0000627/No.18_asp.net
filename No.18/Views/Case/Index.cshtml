@@ -1,8 +1,8 @@
-﻿@{
+﻿@model No._18.Models.CaseIndexViewModel
+
+@{
     ViewData["Title"] = "事務所";
 }
-
-@model IEnumerable<No._18.Models.CaseModel>
 
 <div class="container-fluid">
     <div class="row">
@@ -23,21 +23,13 @@
             <!-- 案件列表 -->
             <div class="flex-grow-1 overflow-auto">
                 <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        案件 A(範例)
-                        <button class="btn btn-sm btn-outline-primary">查看</button>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        案件 B(範例)
-                        <button class="btn btn-sm btn-outline-primary">查看</button>
-                    </li>
                     <!-- 可以用迴圈產生更多案件 -->
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.AllCases)
                     {
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a asp-action="Index" asp-route-id="@item.Id"
+                           class="list-group-item list-group-item-action @(Model.SelectedCase?.Id == item.Id ? "active" : "")">
                             @item.CompanyName
-                            <button class="btn btn-sm btn-outline-primary">查看</button>
-                        </li>
+                        </a>
                     }
                 </ul>
             </div>
@@ -45,33 +37,37 @@
 
         <!-- 右側主要內容區 (3/4) -->
         <div class="col-md-8 p-4">
-            <h3>主要內容區</h3>
-            <p>這裡可以放案件詳細內容或其他資訊。</p>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>案件編號</th>
-                        <th>公司名稱</th>
-                        <th>種類</th>
-                        <th>負責人</th>
-                        <th>電話</th>
-                        <th>信箱</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@item.CaseNumber</td>
-                            <td>@item.CompanyName</td>
-                            <td>@item.Type</td>
-                            <td>@item.ResponsiblePerson</td>
-                            <td>@item.Phone</td>
-                            <td>@item.Email</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            @if (Model.SelectedCase != null)
+            {
+                <h3>案件詳細資料 - @Model.SelectedCase.CompanyName</h3>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-3">案件編號</dt>
+                    <dd class="col-sm-9">@Model.SelectedCase.CaseNumber</dd>
+
+                    <dt class="col-sm-3">公司名稱</dt>
+                    <dd class="col-sm-9">@Model.SelectedCase.CompanyName</dd>
+
+                    <dt class="col-sm-3">種類</dt>
+                    <dd class="col-sm-9">@Model.SelectedCase.Type</dd>
+
+                    <dt class="col-sm-3">負責人</dt>
+                    <dd class="col-sm-9">@Model.SelectedCase.ResponsiblePerson</dd>
+
+                    <dt class="col-sm-3">電話</dt>
+                    <dd class="col-sm-9">@Model.SelectedCase.Phone</dd>
+
+                    <dt class="col-sm-3">信箱</dt>
+                    <dd class="col-sm-9">@Model.SelectedCase.Email</dd>
+                </dl>
+            }
+            else
+            {
+                <div class="text-center mt-5">
+                    <h3>請從左側列表選擇一個案件</h3>
+                    <p class="text-muted">選擇後，案件的詳細資料將會顯示在此處。</p>
+                </div>
+            }
         </div>
     </div>
 </div>
