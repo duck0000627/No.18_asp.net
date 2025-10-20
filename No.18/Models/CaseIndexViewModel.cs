@@ -7,5 +7,8 @@
 
         // 用於存放右側要顯示細節的單一案件
         public CaseModel SelectedCase { get; set; }
+
+        // 用於存放並回傳使用者輸入的搜尋關鍵字
+        public string SearchString { get; set; }
     }
 }

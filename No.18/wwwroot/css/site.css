@@ -20,3 +20,57 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* 進度條樣式 */
+.progress-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 2rem 0;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+    .progress-step .step-button {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        border: 3px solid #e0e0e0;
+        background-color: #fff;
+        color: #e0e0e0;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+        .progress-step .step-button.active {
+            border-color: #0d6efd;
+            background-color: #0d6efd;
+            color: #fff;
+        }
+
+        .progress-step .step-button.completed {
+            border-color: #198754;
+            background-color: #198754;
+            color: #fff;
+        }
+
+.progress-arrow {
+    flex-grow: 1;
+    height: 4px;
+    background-color: #e0e0e0;
+    margin: 0 1rem;
+    margin-bottom: 1.5rem; /* 對齊按鈕文字 */
+}
+
+    .progress-arrow.completed {
+        background-color: #198754;
+    }

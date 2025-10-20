@@ -9,9 +9,12 @@
         <!-- 左側側邊欄 (1/4) -->
         <div class="col-md-4 border-end vh-100 d-flex flex-column p-3">
             <!-- 搜尋框 -->
-            <div class="mb-3">
-                <input type="text" class="form-control" placeholder="搜尋案件...">
-            </div>
+            <form asp-action="Index" method="get">
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="輸入案件編號或負責人姓名... (輸入後按 Enter)"
+                           name="searchString" value="@Model.SearchString">
+                </div>
+            </form>
 
             <hr> <!-- 分隔線 -->
             <!-- 新增案件按鈕 -->
@@ -39,6 +42,81 @@
         <div class="col-md-8 p-4">
             @if (Model.SelectedCase != null)
             {
+                var currentStatus = Model.SelectedCase.Status;
+
+                <div class="progress-container">
+                    <div class="progress-step">
+                        <div class="step-button @(currentStatus >= CaseStatus.Received ? "completed" : "")">✓</div>
+                        <div>收件</div>
+                    </div>
+                    <div class="progress-arrow @(currentStatus >= CaseStatus.Processing ? "completed" : "")"></div>
+
+                    <div class="progress-step">
+                        <div class="step-button @(currentStatus == CaseStatus.Processing ? "active" : "") @(currentStatus > CaseStatus.Processing ? "completed" : "")">2</div>
+                        <div>處理中</div>
+                        @if (currentStatus == CaseStatus.Received)
+                        {
+                            <form asp-action="UpdateStatus" method="post" class="mt-2">
+                                <input type="hidden" name="caseId" value="@Model.SelectedCase.Id" />
+                                <input type="hidden" name="newStatus" value="@CaseStatus.Processing" />
+                                <button type="submit" class="btn btn-sm btn-primary">設為處理中</button>
+                            </form>
+                        }
+                        else if (currentStatus == CaseStatus.Processing)
+                        {
+                            <form asp-action="UpdateStatus" method="post" class="mt-2">
+                                <input type="hidden" name="caseId" value="@Model.SelectedCase.Id" />
+                                <input type="hidden" name="newStatus" value="@CaseStatus.Received" />
+                                <button type="submit" class="btn btn-sm btn-warning">取消處理</button>
+                            </form>
+                        }
+                    </div>
+                    <div class="progress-arrow @(currentStatus >= CaseStatus.Review ? "completed" : "")"></div>
+
+                    <div class="progress-step">
+                        <div class="step-button @(currentStatus == CaseStatus.Review ? "active" : "") @(currentStatus > CaseStatus.Review ? "completed" : "")">3</div>
+                        <div>待核對</div>
+                        @if (currentStatus == CaseStatus.Processing)
+                        {
+                            <form asp-action="UpdateStatus" method="post" class="mt-2">
+                                <input type="hidden" name="caseId" value="@Model.SelectedCase.Id" />
+                                <input type="hidden" name="newStatus" value="@CaseStatus.Review" />
+                                <button type="submit" class="btn btn-sm btn-primary">設為待核對</button>
+                            </form>
+                        }
+                        else if (currentStatus == CaseStatus.Review)
+                        {
+                            <form asp-action="UpdateStatus" method="post" class="mt-2">
+                                <input type="hidden" name="caseId" value="@Model.SelectedCase.Id" />
+                                <input type="hidden" name="newStatus" value="@CaseStatus.Processing" />
+                                <button type="submit" class="btn btn-sm btn-warning">取消核對</button>
+                            </form>
+                        }
+                    </div>
+                    <div class="progress-arrow @(currentStatus >= CaseStatus.Completed ? "completed" : "")"></div>
+
+                    <div class="progress-step">
+                        <div class="step-button @(currentStatus == CaseStatus.Completed ? "completed" : "")">✓</div>
+                        <div>已完成</div>
+                        @if (currentStatus == CaseStatus.Review)
+                        {
+                            <form asp-action="UpdateStatus" method="post" class="mt-2">
+                                <input type="hidden" name="caseId" value="@Model.SelectedCase.Id" />
+                                <input type="hidden" name="newStatus" value="@CaseStatus.Completed" />
+                                <button type="submit" class="btn btn-sm btn-success">設為已完成</button>
+                            </form>
+                        }
+                        else if (currentStatus == CaseStatus.Completed)
+                        {
+                            <form asp-action="UpdateStatus" method="post" class="mt-2">
+                                <input type="hidden" name="caseId" value="@Model.SelectedCase.Id" />
+                                <input type="hidden" name="newStatus" value="@CaseStatus.Review" />
+                                <button type="submit" class="btn btn-sm btn-warning">取消完成</button>
+                            </form>
+                        }
+                    </div>
+                </div>
+
                 <h3>案件詳細資料 - @Model.SelectedCase.CompanyName</h3>
                 <hr />
                 <dl class="row">

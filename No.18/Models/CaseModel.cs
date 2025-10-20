@@ -28,5 +28,23 @@ namespace No._18.Models
         [EmailAddress]
         [Display(Name = "信箱")]
         public string Email { get; set; }
+
+        [Display(Name = "案件狀態")]
+        public CaseStatus Status { get; set; }
+    }
+
+    public enum CaseStatus
+    {
+        [Display(Name = "收件")]
+        Received,
+
+        [Display(Name = "處理中")]
+        Processing,
+
+        [Display(Name = "待核對")]
+        Review,
+
+        [Display(Name = "已完成")]
+        Completed
     }
 }
