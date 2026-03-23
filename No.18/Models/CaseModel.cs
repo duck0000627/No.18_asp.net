@@ -7,7 +7,7 @@ namespace No._18.Models
         [Key]
         public int Id { get; set; } // 資料庫自動編號
 
-        [Required]
+        [Required] // NOT NULL
         [Display(Name = "案件編號")]
         public string CaseNumber { get; set; }
 
