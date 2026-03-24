@@ -33,7 +33,7 @@ namespace No._18.Models
         public CaseStatus Status { get; set; }
     }
 
-    public enum CaseStatus
+    public enum CaseStatus  //列舉
     {
         [Display(Name = "收件")]
         Received,

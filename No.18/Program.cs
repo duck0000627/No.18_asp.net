@@ -13,6 +13,25 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
+// ======== 加入這段自動建表與更新資料庫的程式碼 ========
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<No._18.Models.AppDbContext>();
+        // 這一行會自動尋找最新的 Migration，並幫你在雲端建立資料表
+        context.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        // 萬一建表失敗，可以在這裡捕捉錯誤 (目前先留空即可)
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "自動建立資料庫時發生錯誤。");
+    }
+}
+// ========================================================
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

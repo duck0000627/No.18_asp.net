@@ -5,6 +5,7 @@ namespace No._18.Models
 {
     public class AppDbContext : DbContext
     {
+        //DI
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
