@@ -1,0 +1,58 @@
+﻿@model No._18.Models.CaseModel
+
+@{
+    ViewData["Title"] = "修改案件";
+}
+
+<div class="container mt-4">
+    <h2>修改案件資料</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit">
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Status" />
+
+                <div class="mb-3">
+                    <label asp-for="CaseNumber" class="control-label"></label>
+                    <input asp-for="CaseNumber" class="form-control" />
+                    <span asp-validation-for="CaseNumber" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CompanyName" class="control-label"></label>
+                    <input asp-for="CompanyName" class="form-control" />
+                    <span asp-validation-for="CompanyName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Type" class="control-label"></label>
+                    <input asp-for="Type" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ResponsiblePerson" class="control-label"></label>
+                    <input asp-for="ResponsiblePerson" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Phone" class="control-label"></label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">儲存修改</button>
+                    <a asp-action="Index" asp-route-id="@Model.Id" class="btn btn-secondary">取消</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

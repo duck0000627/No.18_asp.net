@@ -90,5 +90,58 @@ namespace No._18.Controllers
             // 更新完成後，重新導向回 Index 頁面，並顯示剛剛更新的那個案件
             return RedirectToAction(nameof(Index), new { id = caseId });
         }
+
+        // GET: /Case/Edit/5 (載入修改畫面)
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var caseModel = await _context.Cases.FindAsync(id);
+            if (caseModel == null) return NotFound();
+
+            return View(caseModel);
+        }
+
+        // POST: /Case/Edit/5 (接收並儲存修改後的資料)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, CaseModel model)
+        {
+            if (id != model.Id) return NotFound();
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(model);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.Cases.Any(e => e.Id == model.Id))
+                        return NotFound();
+                    else
+                        throw;
+                }
+                // 修改成功後，回到首頁並查看該案件
+                return RedirectToAction(nameof(Index), new { id = model.Id });
+            }
+            return View(model);
+        }
+
+        // POST: /Case/Delete/5 (處理刪除請求)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var caseModel = await _context.Cases.FindAsync(id);
+            if (caseModel != null)
+            {
+                _context.Cases.Remove(caseModel);
+                await _context.SaveChangesAsync();
+            }
+            // 刪除成功後，回到首頁
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
